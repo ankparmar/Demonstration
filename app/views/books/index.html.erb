@@ -1,0 +1,62 @@
+
+<h1>Book</h1>
+<p>Find me in app/views/book/index.html.erb</p>
+
+<style>
+         table, th, td {
+            border: 1px solid black;
+         }
+</style>
+<h1>Listing  Book Name</h1>
+<% byebug %>
+<% if @user.admin? %>
+  <table>
+    <thead>
+      <tr>
+        <th>Title</th>
+    
+        <th>Author</th>
+      
+        <th>Description</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @books.each do |book| %>
+        <tr>
+          <td ><%= book.title %></td>
+          <td><%= book.author %></td>
+          <td><%= book.description %></td>
+          <%= link_to "Edit", edit_book_path(book) %> |
+          <%= button_to "Destroy ", book, method: :delete %>
+</div>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+<%else%>
+  <table>
+    <thead>
+      <tr>
+        <th>Title</th>
+    
+        <th>Author</th>
+      
+        <th>Description</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @books.each do |book| %>
+        <tr>
+          <td ><%= book.title %></td>
+          <td><%= book.author %></td>
+          <td><%= book.description %></td>
+          <td> <%=  button_to "Request for Issue", book_requests_path(book_request: {user_id: current_user.id, book_id: book.id, request_date: Date.today}),method: :post%></td>      
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+ <%end%>
+    
+            
