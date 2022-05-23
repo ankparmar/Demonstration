@@ -8,32 +8,32 @@
          }
 </style>
 <h1>Listing  Book Name</h1>
-<% byebug %>
-<% if @user.admin? %>
-  <table>
-    <thead>
-      <tr>
-        <th>Title</th>
-    
-        <th>Author</th>
-      
-        <th>Description</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <% @books.each do |book| %>
+<% if current_user.admin? %>
+  <%= link_to "New Book", new_book_path %>
+  <%= link_to "Book Requests", book_requests_path %>
+    <table>
+      <thead>
         <tr>
-          <td ><%= book.title %></td>
-          <td><%= book.author %></td>
-          <td><%= book.description %></td>
-          <%= link_to "Edit", edit_book_path(book) %> |
-          <%= button_to "Destroy ", book, method: :delete %>
-</div>
+          <th>Title</th>
+      
+          <th>Author</th>
+        
+          <th>Description</th>
         </tr>
-      <% end %>
-      </tbody>
-    </table>
+      </thead>
+
+      <tbody>
+        <% @books.each do |book| %>
+          <tr>
+            <td ><%= book.title %></td>
+            <td><%= book.author %></td>
+            <td><%= book.description %></td>
+            <td><%= link_to "Edit", edit_book_path(book) %> </td> 
+            <td><%= button_to "Destroy ", book, method: :delete %> </td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
 <%else%>
   <table>
     <thead>

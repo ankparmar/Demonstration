@@ -5,4 +5,5 @@ class AddColumnToBook < ActiveRecord::Migration[7.0]
     add_column :books, :description, :string
     add_reference :books, :user, null: false, foreign_key: true
   end
+  
 end

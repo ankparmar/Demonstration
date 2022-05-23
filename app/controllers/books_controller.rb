@@ -1,5 +1,5 @@
 class BooksController < ApplicationController
-  # load_and_authorize_resource
+  load_and_authorize_resource
   before_action :authenticate_user!
   before_action :set_book, only: %i[ show edit update destroy ]
 
@@ -7,7 +7,7 @@ class BooksController < ApplicationController
   def index
     @books = Book.all
     # byebug
-    @user = current_user
+    # @user = current_user
   end
 
   # GET /books/1 or /books/1.json

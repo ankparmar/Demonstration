@@ -1,14 +1,38 @@
 <p style="color: green"><%= notice %></p>
+<style>
+         table, th, td {
+            border: 1px solid black;
+         }
+</style>
+<%= render @book_requests %>
+  <table>
+    <thead>
+      <tr>
+        <th>Title</th>
+    
+        <th>Author</th>
+      
+        <th>Description</th>
+        
+        <th>Status</td>
+      </tr>
+    </thead>
 
-<h1>Book requests</h1>
-
-<div id="book_requests">
-  <% @book_requests.each do |book_request| %>
-    <%= render book_request %>
-    <p>
-      <%= link_to "Show this book request", book_request %>
-    </p>
-  <% end %>
+    <tbody>
+     <% @book_requests.each do |book_request| %>
+        <tr>
+          <td ><%= book_request.user.email %></td>
+          <td><%= book_request.book.title %></td>
+          <td><%= book_request.book.author %></td>
+          <td><%= book_request.status %></td>
+          <td><%= button_to "Approve", book_request, method: :delete %> </td> 
+          <td><%= button_to "Deny", book_request, method: :delete %> </td> 
+          <%# yaha upar button Approve hoto  k button ka text Approved ho jaye or deny ho to denied ho jaye sath hi current user ki request ka status deny aaye%>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+<div>
+  <%= link_to "Back to book List ", books_path %>
+  <%= link_to "New book request", new_book_request_path %>  
 </div>
-
-<%= link_to "New book request", new_book_request_path %>
