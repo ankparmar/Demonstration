@@ -77,8 +77,10 @@ class BookRequestsController < ApplicationController
       UserMailer.with(user: @user,book_request: @book_request).approved_book_request_email.deliver_now 
     end
     redirect_to book_requests_path
-
-
+  end
+   def issued_book
+    @user=current_user
+   
   end
 
   private
