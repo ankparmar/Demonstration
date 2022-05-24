@@ -25,7 +25,10 @@
           <td><%= book_request.book.title %></td>
           <td><%= book_request.book.author %></td>
           <td><%= book_request.status %></td>
-          <td><%= button_to "Cancle", book_request, method: :delete %> </td>
+          <td>
+            <% if book_request.status.eql?("pending") %>
+            <%= button_to "Cancle", book_request, method: :delete %> </td>
+            <%end%>
         </tr>
         <% end %>
       </tbody>

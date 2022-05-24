@@ -33,8 +33,7 @@ class BookRequestsController < ApplicationController
       respond_to do |format|
         if @book_request.save
           @user=current_user
-          @admin=User.where(user_type:"admin")
-          UserMailer.with(user: @user,book_request: @book_request ,admin: @admin ).new_book_request_email.deliver_now 
+          UserMailer.with(user: @user,book_request: @book_request  ).new_book_request_email.deliver_now 
           format.html { redirect_to book_request_url(@book_request), notice: "Book request was successfully created." }
           format.json { render :show, status: :created, location: @book_request }
         else
@@ -62,18 +61,20 @@ class BookRequestsController < ApplicationController
   # DELETE /book_requests/1 or /book_requests/1.json
   def destroy
     @book_request.destroy
+    @user=current_user
+    UserMailer.with(user: @user,book_request: @book_request  ).cancle_book_request_email.deliver_now 
 
     respond_to do |format|
       format.html { redirect_to books_path, notice: "Book request was successfully destroyed." }
       format.json { head :no_content }
     end
   end
-  def update_status 
+  def update_status  
     @user=current_user
     @book_request = BookRequest.find(params[:id])
     @book_request.update(status: params[:status])
     if @book_request.status.eql?("approved")
-      UserMailer.with(user: @user,book_request: @book_request ,admin: @admin ).approved_book_request_email.deliver_now 
+      UserMailer.with(user: @user,book_request: @book_request).approved_book_request_email.deliver_now 
     end
     redirect_to book_requests_path
 
