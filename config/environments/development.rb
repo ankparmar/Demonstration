@@ -40,20 +40,19 @@ Rails.application.configure do
   config.action_mailer.raise_delivery_errors = false
 
   #Devise Mail
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.default_url_options = { host: 'localhost:3000' }
-  config.action_mailer.smtp_settings = {
-    address:              'smtp.gmail.com',
-    port:                  587,
-    user_name:            ENV['SENDMAIL_USERNAME'],
-    password:             ENV['SENDMAIL_PASSWORD'],
-    domain:               ENV['MAIL_HOST'],
-    authentication:       'plain',
-    enable_starttls_auto: true,
-    open_timeout:         5,
-    read_timeout:         5 
-  }
-
+  # host = 'localhost:3000'   # Local server
+  # config.action_mailer.delivery_method = :smtp
+  # config.action_mailer.default_url_options = { host: host, protocol: 'http' }
+  # config.action_mailer.smtp_settings = {
+  #   address:              'smtp.gmail.com',
+  #   port:                  587,
+  #   user_name:            ENV['SENDMAIL_USERNAME'],
+  #   password:             ENV['SENDMAIL_PASSWORD'],
+  #   domain:               ENV['MAIL_HOST'],
+  #   authentication:       'plain',
+  #   enable_starttls_auto: true
+  # }
+  
   config.action_mailer.perform_caching = false
 
   # Print deprecation notices to the Rails logger.
@@ -82,4 +81,33 @@ Rails.application.configure do
 
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
+
+  host = 'localhost:3000'   # Local server
+  config.action_mailer.default_url_options = { host: host, protocol: 'http' }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address:              'smtp.gmail.com',
+    port:                  587,
+    domain:               'mail.google.com',
+    user_name:            'ankitparmar7049@gmail.com',
+    password:             'Ankit@704946',
+    authentication:       'plain',
+    enable_starttls_auto: true,
+    open_timeout:         5,
+    read_timeout:         5 
+  }
+
+
 end
+  # config.action_mailer.delivery_method = :smtp
+  # config.action_mailer.smtp_settings = {
+  #   address:              'smtp.gmail.com',
+  #   port:                 587,
+  #   domain:               'example.com',
+  #   user_name:            '<username>',
+  #   password:             '<password>',
+  #   authentication:       'plain',
+  #   enable_starttls_auto: true,
+  #   open_timeout:         5,
+  #   read_timeout:         5 
+  # }
