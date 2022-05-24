@@ -25,8 +25,17 @@
           <td><%= book_request.book.title %></td>
           <td><%= book_request.book.author %></td>
           <td><%= book_request.status %></td>
-          <td><%= button_to "Approve", book_request, method: :delete %> </td> 
-          <td><%= button_to "Deny", book_request, method: :delete %> </td> 
+          <td><% BookRequest::statuses.keys.each do |status| %>
+              <%if book_request.status.eql?("approved") %>
+                <%= button_to "approved" %>
+                <%break%>
+              <%else%>
+                <% unless book_request.status.eql?(status.to_s) %>
+                  <%= button_to status, update_status_book_request_path(book_request ,status: status) , method: :patch %>
+                  <%end%>
+                <%end%>
+              <%end%>
+          </td>
           <%# yaha upar button Approve hoto  k button ka text Approved ho jaye or deny ho to denied ho jaye sath hi current user ki request ka status deny aaye%>
         </tr>
         <% end %>

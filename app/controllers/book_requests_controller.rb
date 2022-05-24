@@ -68,12 +68,12 @@ class BookRequestsController < ApplicationController
       format.json { head :no_content }
     end
   end
-  def approve
+  def update_status 
+    @user=current_user
     @book_request = BookRequest.find(params[:id])
-    if @book_request.approved?
-      @book_request.update_attribute(:approved, false)
-    else
-      @book_request.update_attribute(:approved, true)
+    @book_request.update(status: params[:status])
+    if @book_request.status.eql?("approved")
+      UserMailer.with(user: @user,book_request: @book_request ,admin: @admin ).approved_book_request_email.deliver_now 
     end
     redirect_to book_requests_path
 

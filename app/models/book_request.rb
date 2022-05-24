@@ -6,5 +6,6 @@ class BookRequest < ApplicationRecord
     # enum :status, { :pending, :approved, :deny}
     enum :status, [ :pending, :approved, :deny ]
     validates :request_date, presence: true
+    validates :status, presence: true
 
 end

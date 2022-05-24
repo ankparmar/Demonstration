@@ -9,7 +9,7 @@ class Ability
       user ||= User.new # guest user (not logged in)
       if user.admin?
         can :manage, Book
-        can :read, BookRequest
+        can [:read,:update_status], BookRequest
 
       else
         can :read, Book
