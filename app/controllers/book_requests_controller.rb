@@ -78,9 +78,8 @@ class BookRequestsController < ApplicationController
     end
     redirect_to book_requests_path
   end
-   def issued_book
-    @user=current_user
-   
+  def issued_book
+    @book_request =BookRequest.where(status:"approved")
   end
 
   private

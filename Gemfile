@@ -77,6 +77,4 @@ gem "cancancan", "~> 3.3"
 
 gem "byebug", "~> 11.1"
 
-gem 'bootstrap', '~> 5.1.3'
 
-gem 'jquery-rails'

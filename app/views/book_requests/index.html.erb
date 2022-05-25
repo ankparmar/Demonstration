@@ -19,7 +19,7 @@
     </thead>
 
     <tbody>
-     <% @book_requests.each do |book_request| %>
+      <% @book_requests.each do |book_request| %>
         <tr>
           <td ><%= book_request.user.email %></td>
           <td><%= book_request.book.title %></td>
@@ -28,6 +28,9 @@
           <td><% BookRequest::statuses.keys.each do |status| %>
               <%if book_request.status.eql?("approved") %>
                 <%= button_to "approved" %>
+                <%break%>
+                <%elsif book_request.status.eql?("deny") %>
+                <%= button_to "denied" %>
                 <%break%>
               <%else%>
                 <% unless book_request.status.eql?(status.to_s) %>
@@ -38,9 +41,9 @@
           </td>
           <%# yaha upar button Approve hoto  k button ka text Approved ho jaye or deny ho to denied ho jaye sath hi current user ki request ka status deny aaye%>
         </tr>
-        <% end %>
-      </tbody>
-    </table>
+      <% end %>
+    </tbody>
+  </table>
 <div>
   <%= link_to "Back to book List ", books_path %>  
 </div>

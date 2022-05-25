@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     end
   end
   get 'my_book_request', to: 'book_requests#show'
+  get 'issued_book', to: 'book_requests#issued_book'
    devise_for :users
 
   # devise_for :users, controllers: {

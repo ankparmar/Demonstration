@@ -9,8 +9,9 @@
 </style>
 <h1>Listing  Book Name</h1>
 <% if current_user.admin? %>
-  <%= link_to "New Book", new_book_path %>
-  <%= link_to "Book Requests", book_requests_path %>
+  <%= link_to "New Book", new_book_path %>  |
+  <%= link_to "Book Requests", book_requests_path %> |
+  <%= link_to "Issued Books", issued_book_path %>
     <table class=".table-dark">
       <thead>
         <tr>
