@@ -25,7 +25,7 @@ development:
   <<: *default
   username: chris
   password: chris
-  host: localhost
+  host: localhost  
   port: 5432
   database: BookManagement_development
 
@@ -85,9 +85,6 @@ test:
 #
 production:
   <<: *default
-  username: chris
-  password: chris
-  host: localhost
   port: 5432
   database: BookManagement_production
   # username: BookManagement

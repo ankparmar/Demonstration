@@ -4,7 +4,7 @@
             border: 1px solid black;
          }
 </style>
-<%= render @book_requests %>
+<%# <%= render @book_requests %> %>
 <h1> Issued Books</h1>
   <table>
     <thead>
@@ -18,7 +18,7 @@
     </thead>
 
     <tbody>
-     <% @book_requests.each do |book_request| %>
+     <% @approve_requests.each do |book_request| %>
         <tr>
           <td ><%= book_request.user.email %></td>
           <td><%= book_request.book.title %></td>
