@@ -5,7 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,:trackable,:confirmable
 
   has_many :book_requests
-  has_many :books, through: :book_requests
+  # has_many :books, through: :book_requests
 
   def admin?
     user_type == 'admin'
