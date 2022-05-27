@@ -12,7 +12,7 @@
   <%= link_to "New Book", new_book_path %>  |
   <%= link_to "Book Requests", book_requests_path %> |
   <%= link_to "Issued Books", issued_book_path %>
-    <table class="table table-striped">
+    <table class=".table-dark">
       <thead>
         <tr>
           <th>Title</th>
@@ -37,7 +37,7 @@
       </table>
 <%else%>
 <td><%= link_to "My Book Requests", my_book_request_path(current_user) %> </td> 
-  <table class="table table-striped">
+  <table>
     <thead>
       <tr>
         <th>Title</th>
