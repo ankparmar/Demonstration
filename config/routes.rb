@@ -1,24 +1,13 @@
 Rails.application.routes.draw do
-  resources :books
-  resources :book_requests do
-    member do
-      patch :update_status
-    end
+  namespace :admin do
+    resources :books
+    resources :book_requests, only: %i[index update]
   end
-  get 'my_book_request', to: 'book_requests#show'
-  get 'issued_book', to: 'book_requests#issued_book'
-   devise_for :users
 
-  # devise_for :users, controllers: {
-  #   registrations: 'users/registrations',
-  #   sessions: 'users/sessions'
-  # }
+  resources :books, only: %i[index show]
+  resources :book_requests, only: %i[index create destroy]
 
- 
+  devise_for :users
 
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Defines the root path route ("/")
-  # root "articles#index"
   root 'books#index'
 end

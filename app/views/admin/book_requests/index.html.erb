@@ -1,0 +1,67 @@
+<p style="color: green"><%= notice %></p>
+<style>
+         table, th, td {
+            border: 1px solid black;
+         }
+</style>
+<%= render @book_requests %>
+  <%# <table class="table table-striped"> %>
+  <%# class="table-secondary" %>
+  <table class= "table-secondary" >
+    <thead>
+      <tr>
+        <th>Title</th>
+    
+        <th>Author</th>
+      
+        <th>Description</th>
+        
+        <th>Status</td>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @book_requests.each do |book_request| %>
+        <tr>
+          <td ><%= book_request.user.email %></td>
+          <td><%= book_request.book.title %></td>
+          <td><%= book_request.book.author %></td>
+          <td><%= book_request.status %></td>
+          <td>
+
+          <% if book_request.pending? %>
+            ["approve", "deny"].each do |status|
+              <%= button_to status.titleize, book_request_path(book_request, book_request: { status: status } ) , method: :patch %>  
+            end
+
+            <%= button_to 'Approve', book_request_path(book_request, book_request: { status: status } ) , method: :patch %>
+            <%= button_to 'Deny', book_request_path(book_request, book_request: { status: status } ) , method: :patch %>
+          <% else %>
+            <%= button_to book_request.status %>
+          <% end %>
+
+
+          <% BookRequest::statuses.keys.each do |status| %>
+              if 
+
+            <%if book_request.status.eql?("approved") %>
+              <%= button_to "approved" %>
+              <%break%>
+              <%elsif book_request.status.eql?("deny") %>
+              <%= button_to "denied" %>
+              <%break%>
+            <%else%>
+              <% unless book_request.status.eql?(status.to_s) %>
+                <%= button_to status, book_request_path(book_request ,  book_request: { status: status } ) , method: :patch %>
+                <%end%>
+              <%end%>
+            <%end%>
+          </td>
+          <%# yaha upar button Approve hoto  k button ka text Approved ho jaye or deny ho to denied ho jaye sath hi current user ki request ka status deny aaye%>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<div>
+  <%= link_to "Back to book List ", books_path %>  
+</div>

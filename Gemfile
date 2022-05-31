@@ -77,3 +77,5 @@ gem "cancancan", "~> 3.3"
 
 gem "byebug", "~> 11.1"
 
+gem 'jsbundling-rails' 
+gem 'cssbundling-rails'   

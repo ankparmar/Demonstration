@@ -6,6 +6,9 @@
 <p>Book Description : <%=@book.description%></p>
 
 <div>
-  <%= link_to "Edit this book", edit_book_path(@book) %> |
-  <%= link_to "Back to books", books_path %>
+  <% unless @book.book_requested_by_user?(current_user) %>
+    <%= button_to "Request book for issue", book_requests_path(book_request: { book_id: @book.id }), method: :post %>
+  <% else %>
+    <%= button_to "Cancel book issue request", book_request_path(@book.book_requests_by_user(current_user)), method: :delete %>
+  <% end %>
 </div>

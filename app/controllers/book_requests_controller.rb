@@ -1,85 +1,32 @@
 class BookRequestsController < ApplicationController
-  load_and_authorize_resource
-  before_action :set_book_request, only: %i[ edit update destroy ]
+  before_action :set_book_request, only: :destroy
 
-  # GET /book_requests or /book_requests.json
   def index
-    @book_requests = BookRequest.all
+    @book_requests = current_user.book_requests
+
+    if params[:status].present?
+      @book_requests = @book_requests.where(status: params[:status])
+    end
   end
 
-  # GET /book_requests/1 or /book_requests/1.json
-  def show
-    # byebug
-    @book_requests =BookRequest.where(user_id:current_user.id )
-    # byebug
-  end
-
-  # GET /book_requests/new
-  def new
-    @book_request = BookRequest.new
-  end
-
-  # GET /book_requests/1/edit
-  def edit
-  end
-
-  # POST /book_requests or /book_requests.json
   def create
-    if current_user.admin?
-      flash[:alert] = "User not found."
+    @book_request = BookRequest.new(book_request_params.merge(user_id: current_user.id))
+
+    if @book_request.save
+      UserMailer.with(user: current_user,book_request: @book_request  ).new_book_request_email.deliver_now
+
+      redirect_to book_requests_path, notice: "Book request was successfully created."
     else
-      @book_request = BookRequest.new(book_request_params)
-
-      respond_to do |format|
-        if @book_request.save
-          @user=current_user
-          UserMailer.with(user: @user,book_request: @book_request  ).new_book_request_email.deliver_now 
-          format.html { redirect_to book_request_url(@book_request), notice: "Book request was successfully created." }
-          format.json { render :show, status: :created, location: @book_request }
-        else
-          format.html { render :new, status: :unprocessable_entity }
-          format.json { render json: @book_request.errors, status: :unprocessable_entity }
-        end
-      end 
-    end
-
-  end
-
-  # PATCH/PUT /book_requests/1 or /book_requests/1.json
-  def update
-    respond_to do |format|
-      if @book_request.update(book_request_params)
-        format.html { redirect_to book_request_url(@book_request), notice: "Book request was successfully updated." }
-        format.json { render :show, status: :ok, location: @book_request }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @book_request.errors, status: :unprocessable_entity }
-      end
+      redirect_to book_requests_path, alert: @book_request.errors.full_messages.first
     end
   end
 
-  # DELETE /book_requests/1 or /book_requests/1.json
   def destroy
     @book_request.destroy
-    @user=current_user
-    UserMailer.with(user: @user,book_request: @book_request  ).cancle_book_request_email.deliver_now 
 
-    respond_to do |format|
-      format.html { redirect_to books_path, notice: "Book request was successfully destroyed." }
-      format.json { head :no_content }
-    end
-  end
-  def update_status  
-    @user=current_user
-    @book_request = BookRequest.find(params[:id])
-    @book_request.update(status: params[:status])
-    if @book_request.status.eql?("approved")
-      UserMailer.with(user: @user,book_request: @book_request).approved_book_request_email.deliver_now 
-    end
-    redirect_to book_requests_path
-  end
-  def issued_book
-    @approve_requests =BookRequest.where(status:"approved")
+    UserMailer.with(user: current_user,book_request: @book_request).cancle_book_request_email.deliver_now 
+
+    redirect_to book_requests_path, notice: "Book request was successfully destroyed."
   end
 
   private
@@ -90,10 +37,6 @@ class BookRequestsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def book_request_params
-      #  params.fetch(:book_request, {})
-      # params.require(:user_id, :book_id, :issue_date)
-      # byebug
-      params.require(:book_request).permit(:user_id, :book_id, :request_date)
-
+      params.require(:book_request).permit(:book_id)
     end
 end

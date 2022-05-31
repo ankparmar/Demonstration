@@ -4,7 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,:trackable,:confirmable
 
-  has_many :book_requests
+  has_many :book_requests  , dependent: :destroy
   # has_many :books, through: :book_requests
 
   def admin?

@@ -1,0 +1,36 @@
+
+<h1>Books</h1>
+
+<style>
+  table, th, td {
+    border: 1px solid black;
+  }
+</style>
+  <%= link_to "New Book", new_admin_book_path %>  |
+
+    <table class= "table-secondary" >
+      <thead>
+        <tr>
+          <th>Title</th>
+      
+          <th>Author</th>
+        
+          <th>Description</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @books.each do |book| %>
+          <tr>
+            <td ><%= book.title %></td>
+            <td><%= book.author %></td>
+            <td><%= book.description %></td>
+            <td><%= link_to "Edit", edit_admin_book_path(book) %> </td> 
+            <td><%= button_to "Destroy ", book, method: :delete %> </td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+
+    
+            
