@@ -1,9 +1,8 @@
 class BookRequestsController < ApplicationController
+  load_and_authorize_resource
   before_action :set_book_request, only: :destroy
 
   def index
-    @book_requests = current_user.book_requests
-
     if params[:status].present?
       @book_requests = @book_requests.where(status: params[:status])
     end

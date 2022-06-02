@@ -1,8 +1,12 @@
-class Admin::BookRequestsController < ApplicationController
+class Admin::BookRequestsController < AdminController
+  load_and_authorize_resource
+
   before_action :set_book_request, only: :update
 
   def index
-    @book_requests = BookRequest.all
+    if params[:status].present?
+      @book_requests = @book_requests.where(status: params[:status])
+    end
   end
 
   def update

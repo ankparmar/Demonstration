@@ -7,7 +7,8 @@
   }
 </style>
   <%= link_to "New Book", new_admin_book_path %>  |
-
+  <%= link_to "Book Requests", admin_book_requests_path %>  |
+ <%= link_to "Book Issued", admin_book_requests_path(status: "approved") %>
     <table class= "table-secondary" >
       <thead>
         <tr>
@@ -26,7 +27,7 @@
             <td><%= book.author %></td>
             <td><%= book.description %></td>
             <td><%= link_to "Edit", edit_admin_book_path(book) %> </td> 
-            <td><%= button_to "Destroy ", book, method: :delete %> </td>
+            <td><%= button_to "Destroy ", admin_book_path(book), method: :delete %> </td>
           </tr>
         <% end %>
         </tbody>

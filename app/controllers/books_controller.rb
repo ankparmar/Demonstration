@@ -1,8 +1,8 @@
 class BooksController < ApplicationController
+  load_and_authorize_resource
   before_action :set_book, only: :show
 
   def index
-    @books = Book.all
   end
 
   def show

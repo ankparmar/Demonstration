@@ -10,4 +10,8 @@ class User < ApplicationRecord
   def admin?
     user_type == 'admin'
   end
+
+  def role
+    admin? ? "Admin" : "Student"
+  end
 end

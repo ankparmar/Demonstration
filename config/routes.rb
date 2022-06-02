@@ -9,5 +9,11 @@ Rails.application.routes.draw do
 
   devise_for :users
 
-  root 'books#index'
+  root 'home#index'
+  # root 'sessions#new'
+  # post '/admin/books', to: 'books#create'
+  match '/books', to: 'admin/books#create', via: [:post]
+  match '/books/:id', to: 'admin/books#update', via: [:put, :patch]
+
+
 end
